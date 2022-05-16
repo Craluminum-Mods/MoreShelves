@@ -102,7 +102,7 @@ namespace MoreShelves
       float y = 2 / 16f;
       float z = 4 / 16f;
 
-      Vec4f offset = mat.TransformVector(new Vec4f(x - 0.5f, y, z - 0.5f, 0));
+      Vec4f offset = mat.TransformVector(new Vec4f(x - 0.25f, y, z - 0.3125f, 0));
       mesh.Translate(offset.XYZ);
     }
 
