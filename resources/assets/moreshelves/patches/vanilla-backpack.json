@@ -1,0 +1,8 @@
+[
+  {
+    "op": "add",
+    "path": "/attributes/shelvableone",
+    "value": true,
+    "file": "game:itemtypes/bag/backpack.json"
+  }
+]

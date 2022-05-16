@@ -1,0 +1,8 @@
+[
+  {
+    "op": "add",
+    "path": "/attributes/shelvableone",
+    "value": true,
+    "file": "game:blocktypes/metal/anvil.json"
+  }
+]
