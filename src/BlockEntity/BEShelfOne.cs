@@ -8,13 +8,25 @@ namespace MoreShelves
   public class BlockEntityShelfOne : BlockEntityShelf
   {
     private InventoryGeneric inv;
-    Matrixf mat = new Matrixf();
+    public override InventoryBase Inventory => inv;
+    
     public override string AttributeTransformCode => "onShelfOneTransform";
+
+    Block block;
+    Matrixf mat = new Matrixf();
 
     public BlockEntityShelfOne()
     {
       inv = new InventoryGeneric(1, "shelf-0", null, null);
       meshes = new MeshData[1];
+    }
+
+    public override void Initialize(ICoreAPI api)
+    {
+        block = api.World.BlockAccessor.GetBlock(Pos);
+        mat.RotateYDeg(block.Shape.rotateY);
+
+        base.Initialize(api);
     }
 
     internal bool OnInteract(IPlayer byPlayer, BlockSelection blockSel)
