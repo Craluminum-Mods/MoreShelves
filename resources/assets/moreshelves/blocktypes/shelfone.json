@@ -18,7 +18,7 @@
   "blockmaterial": "Wood",
   "replaceable": 900,
   "resistance": 1.5,
-  "lightAbsorption": 1,
+  "lightAbsorption": 0,
   "sidesolid": {
     "all": false
   },
@@ -46,7 +46,7 @@
     "y1": 0,
     "z1": 0,
     "x2": 1,
-    "y2": 0.5,
+    "y2": 1,
     "z2": 0.8125,
     "rotateYByType": {
       "*-north": 0,
