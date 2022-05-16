@@ -1,0 +1,8 @@
+[
+  {
+    "op": "add",
+    "path": "/attributesByType/toolmold-burned-anvil/shelvableone",
+    "value": true,
+    "file": "game:blocktypes/clay/mold/toolmold.json"
+  }
+]
