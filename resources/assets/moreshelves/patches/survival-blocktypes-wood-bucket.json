@@ -1,0 +1,16 @@
+[
+  {
+    "op": "add",
+    "path": "/attributes/shelvableone",
+    "value": true,
+    "file": "game:blocktypes/wood/bucket.json"
+  },
+  {
+    "op": "add",
+    "path": "/attributes/onShelfOneTransform",
+    "value": {
+      
+    },
+    "file": "game:blocktypes/wood/bucket.json"
+  }
+]
