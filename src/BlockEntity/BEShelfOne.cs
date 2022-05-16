@@ -1,5 +1,6 @@
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
@@ -9,11 +10,13 @@ namespace MoreShelves
   {
     private InventoryGeneric inv;
     public override InventoryBase Inventory => inv;
-    
+
     public override string AttributeTransformCode => "onShelfOneTransform";
 
     Block block;
     Matrixf mat = new Matrixf();
+    private int rotation;
+    static readonly Vec3f centre = new Vec3f(0.5f, 0, 0.5f);
 
     public BlockEntityShelfOne()
     {
@@ -23,10 +26,34 @@ namespace MoreShelves
 
     public override void Initialize(ICoreAPI api)
     {
-        block = api.World.BlockAccessor.GetBlock(Pos);
-        mat.RotateYDeg(block.Shape.rotateY);
+      base.Initialize(api);
 
-        base.Initialize(api);
+      block = api.World.BlockAccessor.GetBlock(Pos);
+      mat.RotateYDeg(block.Shape.rotateY);
+      this.SetRotation();
+    }
+
+    private void SetRotation()
+    {
+      switch (Block.Variant["side"])
+      {
+        case "south": this.rotation = 180; break;
+        case "west": this.rotation = 90; break;
+        case "east": this.rotation = 270; break;
+        default: this.rotation = 0; break;
+      }
+    }
+
+    public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldForResolving)
+    {
+      base.FromTreeAttributes(tree, worldForResolving);
+      rotation = tree.GetInt("rota");
+    }
+
+    public override void ToTreeAttributes(ITreeAttribute tree)
+    {
+      base.ToTreeAttributes(tree);
+      tree.SetInt("rota", rotation);
     }
 
     internal bool OnInteract(IPlayer byPlayer, BlockSelection blockSel)
@@ -44,7 +71,7 @@ namespace MoreShelves
       else
       {
         CollectibleObject colObj = slot.Itemstack.Collectible;
-        if (colObj.Attributes != null && ((colObj.Attributes["shelvable"].AsBool(false) == true) || (colObj.Attributes["shelvableone"].AsBool(false) == true)))
+        if (colObj.Attributes != null && colObj.Attributes["shelvableone"].AsBool(false) == true)
         {
           AssetLocation sound = slot.Itemstack?.Block?.Sounds?.Place;
 
@@ -102,8 +129,9 @@ namespace MoreShelves
       float y = 2 / 16f;
       float z = 4 / 16f;
 
-      Vec4f offset = mat.TransformVector(new Vec4f(x - 0.25f, y, z - 0.3125f, 0));
+      Vec4f offset = mat.TransformVector(new Vec4f(x - 0.25f, y, z - 0.25f, 0));
       mesh.Translate(offset.XYZ);
+      if (this.rotation > 0) mesh.Rotate(centre, 0, rotation * GameMath.DEG2RAD, 0);
     }
 
   }
